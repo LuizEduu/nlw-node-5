@@ -25,7 +25,7 @@ class Setting {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor(username: string, chat: boolean) {
+  constructor() {
     if (!this.id) {
       this.id = uuid();
     }
