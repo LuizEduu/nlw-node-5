@@ -4,6 +4,7 @@ import { FindConnectionService } from '../services/connections/FindConnectionSer
 import { CheckUserExistsService } from '../services/users/CheckUserExists';
 import { CreateUserService } from '../services/users/CreateUserService';
 import { CreateMessageService } from '../services/messages/CreateMessageService';
+import { ListMessagesService } from '../services/messages/ListMessagesService';
 
 interface Params {
   text: string;
@@ -16,6 +17,7 @@ io.on('connect', (socket) => {
   const createUserService = new CreateUserService();
   const findConnectionService = new FindConnectionService();
   const createMessageService = new CreateMessageService();
+  const listMessagesService = new ListMessagesService();
 
   socket.on('client_first_access', async (params) => {
     const socket_id = socket.id;
@@ -53,6 +55,31 @@ io.on('connect', (socket) => {
     await createMessageService.create({
       text,
       user_id,
+    });
+
+    const allMessages = await listMessagesService.listMessagesByUser(user_id);
+
+    socket.emit('client_list_all_messages', allMessages);
+
+    const allUsers = await findConnectionService.findAllWithoutAdmin();
+    io.emit('client_list_all_users', allUsers);
+  });
+
+  socket.on('client_sent_to_admin', async (params) => {
+    const { text, socket_admin_id } = params;
+
+    const socket_id = socket.id;
+
+    const { user_id } = await findConnectionService.findBySocketId(socket_id);
+
+    const message = await createMessageService.create({
+      text,
+      user_id,
+    });
+
+    io.to(socket_admin_id).emit('admin_receive_message', {
+      message,
+      socket_id,
     });
   });
 });

@@ -20,11 +20,10 @@
       </div>
 
       <div class="text_support">
-        <script id="email-template" type="text/template">
+
+        <script id="message-user-template" type="text/template">
           <div class="client">
             <span class="name">{{email}}</span>
-          </script>
-          <script id="message-user-template" type="text/template">
             <span class="client message">
               {{message}}
               <!-- <label class="date">{{date}}</label> -->
@@ -61,7 +60,7 @@
       <div class="text_support text_help">
         <div class="text_help">
           <span>Como podemos te ajudar?</span>
-          <textarea name="txt_help" id="txt_help" cols="30" rows="10" onkeydown="keyUpTextHelp(event)" maxlength="250"></textarea>
+          <textarea style="border-radius: 12px;" name="txt_help" id="txt_help" cols="30" rows="10" onkeydown="keyUpTextHelp(event)" maxlength="250"></textarea>
           <span class="charac_remaining">
             <label id="charac_remaining">250</label>
             caracteres restantes</span >
@@ -69,7 +68,7 @@
 
         <div class="first_email">
           <span>Seu e-mail</span>
-          <input type="text" name="" id="email"/>
+          <input type="text" name="" id="email" style="border-radius: 12px;"/>
         </div>
 
         <div class="button">

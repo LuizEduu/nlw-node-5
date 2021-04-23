@@ -36,7 +36,7 @@ class SettingsController {
 
     await updateSettingsService.update({ username, chat });
 
-    return res.status(201).json();
+    return res.status(204).json();
   }
 }
 
